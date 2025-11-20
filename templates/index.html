@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EduCentral</title>
+
+    <style>
+        body {
+            background: linear-gradient(to bottom right, #0d1b3d, #1e3c72, #2a5298);
+            font-family: "Segoe UI", sans-serif;
+            color: white;
+            margin: 0;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 140px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            color:white;
+        }
+
+        .container {
+            width: 100%;
+            margin: auto;
+            text-align: center;
+        }
+
+        input {
+            width: 50%;
+            padding: 14px;
+            font-size: 58px;
+            border-radius: 8px;
+            border: none;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 12px 25px;
+            margin: 10px;
+            font-size: 68px;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            background: #4ea8de;
+            color: white;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #1e90ff;
+        }
+
+        #studentBox {
+            width: 80%;
+            height: 100vh;   /* Half laptop screen */
+            background: rgba(255, 255, 255, 0.15);
+            margin: 30px auto;
+            border-radius: 12px;
+            padding: 20px;
+            overflow-y: none;
+            font-size: 20px;
+            backdrop-filter: blur(4px);
+        }
+
+        .student {
+            background: rgba(255,255,255,0.25);
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            text-align: left;
+        }
+    </style>
+
+    <script>
+        function addStudent() {
+            let name = document.getElementById("nameInput").value;
+
+            if (name.trim() === "") {
+                alert("Enter a name");
+                return;
+            }
+
+            let form = new FormData();
+            form.append("name", name);
+
+            fetch("/add_student", {
+                method: "POST",
+                body: form
+            }).then(res => res.text())
+              .then(data => {
+                  alert("Student Added!");
+                  document.getElementById("nameInput").value = "";
+              });
+        }
+
+        function showStudents() {
+            fetch("/get_students")
+                .then(res => res.json())
+                .then(data => {
+                    let box = document.getElementById("studentBox");
+                    box.innerHTML = "";
+                    data.forEach(name => {
+                        box.innerHTML += `<div class="student">${name}</div>`;
+                    });
+                });
+        }
+    </script>
+
+</head>
+<body>
+
+<h1>EduCentral</h1>
+
+<div class="container">
+
+    <input id="nameInput" type="text" placeholder="Enter student name...">
+
+    <br>
+
+    <button onclick="addStudent()">Add Student</button>
+    <button onclick="showStudents()">Show Students</button>
+
+    <div id="studentBox">
+        <!-- student list appears here -->
+    </div>
+
+</div>
+
+</body>
+</html>
