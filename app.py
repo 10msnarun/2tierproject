@@ -35,14 +35,22 @@ def add_student():
 
 @app.route("/get_students", methods=["GET"])
 def get_students():
-    conn = get_db()
-    cursor = conn.cursor()
-    cursor.execute("SELECT name FROM students")
-    data = cursor.fetchall()
-    students = [row[0] for row in data]
-    cursor.close()
-    conn.close()
-    return jsonify(students)
+    print("get_students endpoint was called!")  # Debug marker
+    try:
+        conn = get_db()
+        cursor = conn.cursor()
+        cursor.execute("SELECT name FROM students")
+        data = cursor.fetchall()
+        students = [row[0] for row in data]
+        cursor.close()
+        conn.close()
+        print("Fetched students:", students)     # Debug marker
+        return jsonify(students)
+    except Exception as e:
+        print("Error in get_students:", e)
+        print(traceback.format_exc())
+        return jsonify({"error": str(e)}), 500
+
 
 @app.route("/health", methods=["GET"])
 def health():
