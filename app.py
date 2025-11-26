@@ -4,6 +4,7 @@ import os
 
 app = Flask(__name__)
 #my first deploy project
+#error2
 #my first project
 def get_db():
     db_host = os.environ.get("DB_HOST", "localhost")
