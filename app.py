@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 import mysql.connector
 import os
+import traceback
 
 app = Flask(__name__)
 #my first deploy project
