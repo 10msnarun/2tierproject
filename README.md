@@ -1,6 +1,4 @@
-Here’s a concise `README.md` you can put in your repo describing everything you’ve built (two‑tier Flask + MySQL app on EC2 with Docker, Docker Compose, and Jenkins CI/CD). Adjust names/paths as needed.
 
-***
 
 ## Two‑Tier Flask + MySQL App with Docker, Docker Compose & Jenkins
 
